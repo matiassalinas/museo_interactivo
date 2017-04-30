@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Museo Interactivo</string>
+    <string name="app_key">M_I_2619</string>
     <string name="bienvenido">¡ Bienvenido/a !</string>
     <string name="texto_ingresar">Para ingresar debes escanear el código QR que se encuentra en la parte superior izquierda de tu entrada.</string>
+    <string name="menu_settings">Settings</string>
 </resources>
