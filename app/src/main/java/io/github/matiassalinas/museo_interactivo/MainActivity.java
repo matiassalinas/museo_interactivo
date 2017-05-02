@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.scanButton){
-            Intent i = new Intent(this,DetectorActivity.class);
+            //Intent i = new Intent(this,DetectorActivity.class);
+            Intent i = new Intent(this,HomeActivity.class);
             startActivity(i);
         }
     }

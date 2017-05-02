@@ -4,4 +4,6 @@
     <string name="bienvenido">¡ Bienvenido/a !</string>
     <string name="texto_ingresar">Para ingresar debes escanear el código QR que se encuentra en la parte superior izquierda de tu entrada.</string>
     <string name="menu_settings">Settings</string>
+    <string name="ranking">Rango: Platino</string>
+    <string name="puntaje">Puntaje: 1234</string>
 </resources>
