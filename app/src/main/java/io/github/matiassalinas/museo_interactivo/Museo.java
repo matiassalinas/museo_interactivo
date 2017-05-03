@@ -17,7 +17,8 @@ public class Museo {
         this.correo = correo;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.zonas = zonas;
+        if(zonas == null) this.zonas = new ArrayList<>();
+        else this.zonas = zonas;
     }
 
     public int getIdMuseo() {
@@ -42,8 +43,13 @@ public class Museo {
     public ArrayList<Zona> getZonas() {
         return zonas;
     }
-
-    public void addZona(Zona zona) {
-        this.zonas.add(zona);
+    public Zona getZona(int i){
+        return zonas.get(i);
+    }
+    public int getZonasSize(){
+        return zonas.size();
+    }
+    public void setZonas(ArrayList<Zona> zonas) {
+        this.zonas = zonas;
     }
 }

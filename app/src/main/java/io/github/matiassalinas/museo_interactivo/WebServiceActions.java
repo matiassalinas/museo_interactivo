@@ -1,6 +1,8 @@
 package io.github.matiassalinas.museo_interactivo;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -8,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by matias on 02-05-17.
@@ -16,10 +19,21 @@ import java.net.URL;
 public class WebServiceActions {
     private static String link = "http://museointeractivo.msalinas.cl/consultas.php";
 
-    public static JSONArray getZonas(int idMuseo) throws IOException {
+    public static ArrayList<Zona> getZonas(int idMuseo) throws IOException {
         String opcion = "getZonas";
         String urlParameters = "Opcion="+opcion+"&idMuseo="+idMuseo;
-        return getArrayFromServer(link,urlParameters);
+        JSONArray json = getArrayFromServer(link,urlParameters);
+        ArrayList<Zona> zonas = new ArrayList<>();
+        for(int i = 0; i<json.length();i++){
+            try {
+                JSONObject z = json.getJSONObject(i);
+                Zona zona = new Zona(Integer.parseInt((String) z.get("idZona")), idMuseo, (String) z.get("nombre"), (String) z.get("descripcion"), (String) z.get("imagen"));
+                zonas.add(zona);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return zonas;
     }
 
     private static JSONArray getArrayFromServer(String link, String urlParameters){

@@ -5,36 +5,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "LOG BD";
-    private int idMuseo;
+    private Museo museo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        idMuseo = 1;
-
+        museo = new Museo(1,"Nombre","correo","direccion","telefono",null);
         Thread tr1 = new Thread(){
             @Override
             public void run() {
                 try {
-                    JSONArray json = WebServiceActions.getZonas(idMuseo);
-                    for(int i = 0; i<json.length();i++){
-                        JSONObject zona = json.getJSONObject(i);
-                        Log.d("idZona",(String)zona.get("idZona"));
-                    }
+                    if(museo.getZonasSize()==0) museo.setZonas(WebServiceActions.getZonas(museo.getIdMuseo()));
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            for(int i = 0;i<museo.getZonasSize();i++){
+                                Log.d("Zona: ",museo.getZona(i).getNombre());
+                            }
                             Toast.makeText(getApplicationContext(),"Zonas cargadas", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -42,8 +35,6 @@ public class HomeActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
             }
         };
