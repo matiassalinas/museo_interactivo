@@ -2,14 +2,13 @@ package io.github.matiassalinas.museo_interactivo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static final String TAG = "LOG BD";
     private Museo museo;
 
     @Override
@@ -17,6 +16,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         museo = new Museo(1,"Nombre","correo","direccion","telefono",null);
+        showZonas();
+    }
+
+    private void showZonas(){
         Thread tr1 = new Thread(){
             @Override
             public void run() {
@@ -25,9 +28,7 @@ public class HomeActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            for(int i = 0;i<museo.getZonasSize();i++){
-                                Log.d("Zona: ",museo.getZona(i).getNombre());
-                            }
+                            setList();
                             Toast.makeText(getApplicationContext(),"Zonas cargadas", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -39,6 +40,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         };
         tr1.start();
+    }
+
+    private void setList(){
+        ZonasAdapter adapter = new ZonasAdapter(getBaseContext(),museo.getZonas());
+        ListView listZonas = (ListView) findViewById(R.id.listZonas);
+        listZonas.setAdapter(adapter);
     }
 
 
