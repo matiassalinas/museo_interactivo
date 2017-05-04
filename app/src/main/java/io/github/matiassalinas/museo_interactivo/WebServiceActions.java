@@ -27,13 +27,38 @@ public class WebServiceActions {
         for(int i = 0; i<json.length();i++){
             try {
                 JSONObject z = json.getJSONObject(i);
-                Zona zona = new Zona(Integer.parseInt((String) z.get("idZona")), idMuseo, (String) z.get("nombre"), (String) z.get("descripcion"), (String) z.get("imagen"));
+                Zona zona = new Zona(Integer.parseInt((String) z.get("idZona")),
+                                    idMuseo,
+                                    (String) z.get("nombre"),
+                                    (String) z.get("descripcion"),
+                                    (String) z.get("imagen"));
                 zonas.add(zona);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         return zonas;
+    }
+
+    public static ArrayList<Objetivo> getObjetivos(int idZona) throws IOException {
+        String opcion = "getObjetivos";
+        String urlParameters = "Opcion="+opcion+"&idZona="+idZona;
+        JSONArray json = getArrayFromServer(link,urlParameters);
+        ArrayList<Objetivo> objetivos = new ArrayList<>();
+        for(int i = 0; i<json.length(); i++){
+            try{
+                JSONObject obj = json.getJSONObject(i);
+                Objetivo objetivo = new Objetivo(Integer.parseInt((String) obj.get("idObjetivo")),
+                                                idZona,
+                                                (String) obj.get("titulo"),
+                                                (String) obj.get("texto"),
+                                                (String) obj.get("imagen"));
+                objetivos.add(objetivo);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return objetivos;
     }
 
     private static JSONArray getArrayFromServer(String link, String urlParameters){

@@ -1,7 +1,10 @@
 package io.github.matiassalinas.museo_interactivo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -46,6 +49,15 @@ public class HomeActivity extends AppCompatActivity {
         ZonasAdapter adapter = new ZonasAdapter(getBaseContext(),museo.getZonas());
         ListView listZonas = (ListView) findViewById(R.id.listZonas);
         listZonas.setAdapter(adapter);
+        listZonas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent mIntent = new Intent(HomeActivity.this, ZonaActivity.class);
+                Toast.makeText(getApplicationContext(),museo.getZona(position).getNombre(), Toast.LENGTH_SHORT).show();
+                mIntent.putExtra("zona", museo.getZona(position));
+                startActivity(mIntent);
+            }
+        });
     }
 
 

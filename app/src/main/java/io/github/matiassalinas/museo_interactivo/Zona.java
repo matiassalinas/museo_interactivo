@@ -1,10 +1,12 @@
 package io.github.matiassalinas.museo_interactivo;
 
+import java.io.Serializable;
+
 /**
  * Created by matias on 02-05-17.
  */
 
-public class Zona {
+public class Zona implements Serializable {
     private int idZona, idMuseo;
     private String nombre, descripcion, imagen;
 

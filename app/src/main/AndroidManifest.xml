@@ -25,7 +25,8 @@
         </activity>
         <activity android:name=".DetectorActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".ZonaActivity"></activity>
+        <activity android:name=".ZonaActivity" />
+        <activity android:name=".ObjetivoActivity"></activity>
     </application>
 
 </manifest>

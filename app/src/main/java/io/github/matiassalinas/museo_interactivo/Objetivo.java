@@ -1,10 +1,12 @@
 package io.github.matiassalinas.museo_interactivo;
 
+import java.io.Serializable;
+
 /**
  * Created by matias on 02-05-17.
  */
 
-public class Objetivo {
+public class Objetivo implements Serializable {
     private int idObjetivo, idZona;
     private String titulo, texto,imagen;
 

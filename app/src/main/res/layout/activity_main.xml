@@ -55,10 +55,9 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_weight="1"
             android:fontFamily="casual"
-            android:text="TextView"
+            android:text="@string/texto_ingresar"
             android:textAlignment="center"
-            android:textSize="18dp"
-            tools:text="@string/texto_ingresar" />
+            android:textSize="18dp" />
 
     </LinearLayout>
 
