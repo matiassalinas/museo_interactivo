@@ -6,4 +6,5 @@
     <string name="menu_settings">Settings</string>
     <string name="ranking">Rango: Platino</string>
     <string name="puntaje">Puntaje: 1234</string>
+    <string name="scanObjetivo">Escanea el código QR correspondiente</string>
 </resources>

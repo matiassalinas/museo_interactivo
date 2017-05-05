@@ -40,6 +40,7 @@ public class ZonaActivity extends AppCompatActivity {
         descripcionZona.setText(zona.getDescripcion());
         if(zona.getImagen() == ""){
             imageLayoutZona.setVisibility(View.GONE);
+            descripcionZona.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
         else{
             new DownloadImageTask(imageZona).execute(zona.getImagen());
