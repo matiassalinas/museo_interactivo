@@ -1,21 +1,37 @@
 package io.github.matiassalinas.museo_interactivo;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ObjetivoActivity extends AppCompatActivity {
+import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+
+public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener{
 
     private Objetivo objetivo;
+    private int intentos = 0;
+    private TextView intentosText;
+    private String textoAnterior = new String();
+
+    private static final int MY_PERMISSION_REQUEST_CAMERA = 0;
+    private TextView resultTextView;
+    private PointsOverlayView pointsOverlayView;
+    private QRCodeReaderView qrCodeReaderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_objetivo);
-
+        intentosText= (TextView) findViewById(R.id.intentosText);
         objetivo = (Objetivo) getIntent().getSerializableExtra("objetivo");
         setTitles();
     }
@@ -28,12 +44,74 @@ public class ObjetivoActivity extends AppCompatActivity {
 
         objetivoTitle.setText(objetivo.getTitulo());
         textoObjetivo.setText(objetivo.getTexto());
-        if(objetivo.getImagen() == ""){
+        Log.d("IMG",objetivo.getImagen());
+        if(objetivo.getImagen() == "" || objetivo.getImagen().isEmpty()){
             imageLayoutObjetivo.setVisibility(View.GONE);
             textoObjetivo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
         else{
             new DownloadImageTask(imageObjetivo).execute(objetivo.getImagen());
         }
+
+        String str = getResources().getString(R.string.intentos, 0,0,100);
+        intentosText.setText(str);
+    }
+
+    @Override
+    public void onQRCodeRead(String text, PointF[] points) {
+        if(resultTextView!=null){
+            resultTextView.setText(text);
+            pointsOverlayView.setPoints(points);
+            Log.d("QRSCAN",text+" y " +textoAnterior);
+            if(text.equals("hola") && !text.equals(textoAnterior)){
+                intentos++;
+                String str = getResources().getString(R.string.intentos, intentos,0,100);
+                intentosText.setText(str);
+                Toast.makeText(getApplicationContext(),"Objetivo Completado", Toast.LENGTH_SHORT).show();
+                qrCodeReaderView.stopCamera();
+            }else if(!text.equals(textoAnterior)){
+                intentos++;
+                String str = getResources().getString(R.string.intentos, intentos,0,100);
+                intentosText.setText(str);
+                Toast.makeText(getApplicationContext(),"Código Escaneado no corresponde al Objetivo", Toast.LENGTH_SHORT).show();
+            }
+            textoAnterior = text;
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("RESUME","RESUME");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+            //setContentView(R.layout.activity_detector);
+            initQRCodeReaderView();
+        }else {
+            Log.d("ELSE","ELSE");
+            requestCameraPermission();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        qrCodeReaderView.stopCamera();
+    }
+
+    private void initQRCodeReaderView(){
+        qrCodeReaderView = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
+        resultTextView = (TextView) findViewById(R.id.result_text_view);
+        pointsOverlayView = (PointsOverlayView) findViewById((R.id.points_overlay_view));
+        qrCodeReaderView.setOnQRCodeReadListener(this);
+        qrCodeReaderView.setAutofocusInterval(2000L);
+        qrCodeReaderView.setTorchEnabled(true);
+        qrCodeReaderView.setBackCamera();
+    }
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(ObjetivoActivity.this, new String[]{
+                Manifest.permission.CAMERA
+        }, MY_PERMISSION_REQUEST_CAMERA);
     }
 }

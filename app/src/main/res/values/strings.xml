@@ -7,4 +7,5 @@
     <string name="ranking">Rango: Platino</string>
     <string name="puntaje">Puntaje: 1234</string>
     <string name="scanObjetivo">Escanea el código QR correspondiente</string>
+    <string name="intentos">Intentos: %1$d\nPuntaje: %2$d/%3$d</string>
 </resources>

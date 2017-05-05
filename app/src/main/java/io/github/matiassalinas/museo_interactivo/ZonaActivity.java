@@ -3,6 +3,7 @@ package io.github.matiassalinas.museo_interactivo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -38,11 +39,14 @@ public class ZonaActivity extends AppCompatActivity {
 
         zonaTitle.setText(zona.getNombre());
         descripcionZona.setText(zona.getDescripcion());
-        if(zona.getImagen() == ""){
+        Log.d("IMG",zona.getImagen() + " img ");
+        if(zona.getImagen() == "" || zona.getImagen().isEmpty()){
+            Log.d("IMG NO", "NO IMG");
             imageLayoutZona.setVisibility(View.GONE);
             descripcionZona.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
         else{
+            Log.d("IMG SI", "SI IMG");
             new DownloadImageTask(imageZona).execute(zona.getImagen());
         }
     }
