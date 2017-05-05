@@ -31,7 +31,8 @@ public class WebServiceActions {
                                     idMuseo,
                                     (String) z.get("nombre"),
                                     (String) z.get("descripcion"),
-                                    (String) z.get("imagen"));
+                                    (String) z.get("imagen"),
+                                    Integer.parseInt((String) z.get("count")));
                 zonas.add(zona);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -59,6 +60,25 @@ public class WebServiceActions {
             }
         }
         return objetivos;
+    }
+
+    public static ArrayList<Historial> getHistorial(String idEntrada) throws IOException{
+        String opcion = "getHistorial";
+        String urlParameters = "Opcion="+opcion+"&idEntrada="+idEntrada;
+        JSONArray json = getArrayFromServer(link,urlParameters);
+        ArrayList<Historial> historial = new ArrayList<>();
+        for(int i = 0; i<json.length();i++){
+            try {
+                JSONObject z = json.getJSONObject(i);
+                Historial historia = new Historial(Integer.parseInt((String) z.get("idObjetivo")),
+                                    Integer.parseInt((String) z.get("puntaje")),
+                                    Integer.parseInt((String) z.get("idZona")));
+                historial.add(historia);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return historial;
     }
 
     private static JSONArray getArrayFromServer(String link, String urlParameters){

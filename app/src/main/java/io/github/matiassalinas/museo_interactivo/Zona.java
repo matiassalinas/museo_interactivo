@@ -7,15 +7,16 @@ import java.io.Serializable;
  */
 
 public class Zona implements Serializable {
-    private int idZona, idMuseo;
+    private int idZona, idMuseo, contadorObjetivos;
     private String nombre, descripcion, imagen;
 
-    public Zona(int idZona, int idMuseo, String nombre, String descripcion, String imagen) {
+    public Zona(int idZona, int idMuseo, String nombre, String descripcion, String imagen, int contadorObjetivos) {
         this.idZona = idZona;
         this.idMuseo = idMuseo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
+        this.contadorObjetivos = contadorObjetivos;
     }
 
     public int getIdZona() {
@@ -56,5 +57,13 @@ public class Zona implements Serializable {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public int getContadorObjetivos() {
+        return contadorObjetivos;
+    }
+
+    public void setContadorObjetivos(int contadorObjetivos) {
+        this.contadorObjetivos = contadorObjetivos;
     }
 }

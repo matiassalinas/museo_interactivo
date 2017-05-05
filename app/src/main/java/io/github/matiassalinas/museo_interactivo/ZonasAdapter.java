@@ -16,10 +16,12 @@ import java.util.ArrayList;
 public class ZonasAdapter extends ArrayAdapter<Zona> {
     Context context;
     ArrayList<Zona> zonas;
-    public ZonasAdapter(Context context, ArrayList<Zona> zonas){
+    ArrayList<Historial> historial;
+    public ZonasAdapter(Context context, ArrayList<Zona> zonas, ArrayList<Historial> historial){
         super(context,0,zonas);
         this.context = context;
         this.zonas = zonas;
+        this.historial = historial;
     }
 
     @Override
@@ -32,7 +34,11 @@ public class ZonasAdapter extends ArrayAdapter<Zona> {
         TextView zonaObjetivos = (TextView) convertView.findViewById(R.id.zonaObjetivos);
 
         zonaName.setText(zona.getNombre());
-        zonaObjetivos.setText("0/0");
+        int cantidad = 0;
+        for(int i = 0; i < historial.size(); i++){
+            if(historial.get(i).getIdZona() == zona.getIdZona()) cantidad++;
+        }
+        zonaObjetivos.setText(cantidad+"/"+zona.getContadorObjetivos());
         return convertView;
     }
 
