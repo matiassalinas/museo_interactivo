@@ -18,7 +18,7 @@ import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener{
 
     private Objetivo objetivo;
-    private int intentos = 0;
+    private int intentos = 0, puntaje=100;
     private TextView intentosText;
     private String textoAnterior = new String();
 
@@ -61,16 +61,25 @@ public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderV
     public void onQRCodeRead(String text, PointF[] points) {
         if(resultTextView!=null){
             resultTextView.setText(text);
+            String[] resultado = text.split("##");
             pointsOverlayView.setPoints(points);
-            Log.d("QRSCAN",text+" y " +textoAnterior);
-            if(text.equals("hola") && !text.equals(textoAnterior)){
+            if(resultado.length!=3 || resultado.length == 0){
+                Toast.makeText(getApplicationContext(),"Código Inválido", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(!resultado[0].equals(getString(R.string.app_key))){
+                Toast.makeText(getApplicationContext(),"Código Inválido", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(resultado[2].equals(String.valueOf(objetivo.getIdObjetivo())) && !text.equals(textoAnterior)){
                 intentos++;
-                String str = getResources().getString(R.string.intentos, intentos,0,100);
+                String str = getResources().getString(R.string.intentos, intentos,puntaje,100);
                 intentosText.setText(str);
                 Toast.makeText(getApplicationContext(),"Objetivo Completado", Toast.LENGTH_SHORT).show();
                 qrCodeReaderView.stopCamera();
             }else if(!text.equals(textoAnterior)){
                 intentos++;
+                if(puntaje>20) puntaje-=20;
                 String str = getResources().getString(R.string.intentos, intentos,0,100);
                 intentosText.setText(str);
                 Toast.makeText(getApplicationContext(),"Código Escaneado no corresponde al Objetivo", Toast.LENGTH_SHORT).show();

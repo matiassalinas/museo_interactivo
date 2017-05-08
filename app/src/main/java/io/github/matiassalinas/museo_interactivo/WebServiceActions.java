@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class WebServiceActions {
     private static String link = "http://museointeractivo.msalinas.cl/consultas.php";
+    private static int cantObjetivos = 0;
 
     public static ArrayList<Zona> getZonas(int idMuseo) throws IOException {
         String opcion = "getZonas";
@@ -27,6 +28,7 @@ public class WebServiceActions {
         for(int i = 0; i<json.length();i++){
             try {
                 JSONObject z = json.getJSONObject(i);
+                cantObjetivos += Integer.parseInt((String) z.get("count"));
                 Zona zona = new Zona(Integer.parseInt((String) z.get("idZona")),
                                     idMuseo,
                                     (String) z.get("nombre"),
@@ -81,6 +83,16 @@ public class WebServiceActions {
         return historial;
     }
 
+    public static boolean objetivoCompletado(String idEntrada, int idObjetivo){
+        String opcion = "objetivoCompletado";
+        String urlParameters = "Opcion="+opcion+"&idEntrada="+idEntrada+"&idObjetivo="+idObjetivo;
+        JSONArray json = getArrayFromServer(link,urlParameters);
+        if(json.length()==1){
+            return true;
+        }
+        return false;
+    }
+
     private static JSONArray getArrayFromServer(String link, String urlParameters){
         HttpURLConnection connection = null;
         try{
@@ -106,5 +118,9 @@ public class WebServiceActions {
 
         }
         return null;
+    }
+
+    public static int getCantObjetivos(){
+        return cantObjetivos;
     }
 }

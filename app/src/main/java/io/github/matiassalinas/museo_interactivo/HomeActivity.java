@@ -16,6 +16,7 @@ public class HomeActivity extends AppCompatActivity {
     private Museo museo;
     private Usuario usuario;
     private TextView puntajeTxt;
+    private TextView rangoTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class HomeActivity extends AppCompatActivity {
         museo = new Museo(1,"Nombre","correo","direccion","telefono",null);
         usuario = new Usuario("MI001", "matias", null);
         puntajeTxt = (TextView) findViewById(R.id.puntajeTextView);
+        rangoTxt = (TextView) findViewById(R.id.rankTextView);
         historial();
     }
 
@@ -61,6 +63,8 @@ public class HomeActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            String str = getResources().getString(R.string.ranking, usuario.getRango(getBaseContext(),WebServiceActions.getCantObjetivos()));
+                            rangoTxt.setText(str);
                             setList();
                             Toast.makeText(getApplicationContext(),"Zonas cargadas", Toast.LENGTH_SHORT).show();
                         }

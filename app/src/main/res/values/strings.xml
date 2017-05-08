@@ -4,8 +4,14 @@
     <string name="bienvenido">¡ Bienvenido/a !</string>
     <string name="texto_ingresar">Para ingresar debes escanear el código QR que se encuentra en la parte superior izquierda de tu entrada.</string>
     <string name="menu_settings">Settings</string>
-    <string name="ranking">Rango: Platino</string>
+    <string name="ranking">Rango: %1$s</string>
     <string name="puntaje">Puntaje: %1$d</string>
     <string name="scanObjetivo">Escanea el código QR correspondiente</string>
     <string name="intentos">Intentos: %1$d\nPuntaje: %2$d/%3$d</string>
+    <string name="Bronce">Bronce</string>
+    <string name="Plata">Plata</string>
+    <string name="Oro">Oro</string>
+    <string name="Platino">Platino</string>
+    <string name="Diamante">Diamante</string>
+    <string name="Leyenda">Leyenda</string>
 </resources>
