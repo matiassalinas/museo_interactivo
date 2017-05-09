@@ -44,6 +44,10 @@ public class Usuario implements Serializable {
         this.historial = historial;
     }
 
+    public void addHistorial(Historial historial){
+        this.historial.add(historial);
+    }
+
     public int puntajeTotal(){
         int puntaje = 0;
         for(int i = 0; i< historial.size(); i++){

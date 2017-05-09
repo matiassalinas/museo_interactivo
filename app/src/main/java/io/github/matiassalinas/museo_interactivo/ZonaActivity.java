@@ -20,6 +20,8 @@ public class ZonaActivity extends AppCompatActivity {
     private Zona zona;
     private Usuario usuario;
     private ArrayList<Objetivo> objetivos;
+    private int puntajeTotal;
+    private ObjetivosAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,19 @@ public class ZonaActivity extends AppCompatActivity {
         setTitles();
         showObjetivos();
 
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("HOLA","HOLA");
+        Usuario usuarioAux = (Usuario) data.getSerializableExtra("usuario");
+        if(usuario.puntajeTotal() != usuarioAux.puntajeTotal()){
+            Log.d("DISINTO","DISTINTO");
+            usuario = usuarioAux;
+            setList();
+        }
     }
 
     private void setTitles(){
@@ -77,7 +92,7 @@ public class ZonaActivity extends AppCompatActivity {
     }
 
     private void setList(){
-        ObjetivosAdapter adapter = new ObjetivosAdapter(getBaseContext(),objetivos, usuario.getHistorial());
+        adapter = new ObjetivosAdapter(getBaseContext(),objetivos, usuario.getHistorial());
         ListView listObjetivos = (ListView) findViewById(R.id.listObjetivos);
         listObjetivos.setAdapter(adapter);
         listObjetivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,7 +101,8 @@ public class ZonaActivity extends AppCompatActivity {
                 Intent mIntent = new Intent(ZonaActivity.this, ObjetivoActivity.class);
                 Toast.makeText(getApplicationContext(),objetivos.get(position).getTitulo(), Toast.LENGTH_SHORT).show();
                 mIntent.putExtra("objetivo", objetivos.get(position));
-                startActivity(mIntent);
+                mIntent.putExtra("usuario",usuario);
+                startActivityForResult(mIntent,0);
             }
         });
     }

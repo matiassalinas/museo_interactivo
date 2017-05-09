@@ -83,14 +83,10 @@ public class WebServiceActions {
         return historial;
     }
 
-    public static boolean objetivoCompletado(String idEntrada, int idObjetivo){
+    public static void objetivoCompletado(String idEntrada, int idObjetivo, int puntaje){
         String opcion = "objetivoCompletado";
-        String urlParameters = "Opcion="+opcion+"&idEntrada="+idEntrada+"&idObjetivo="+idObjetivo;
-        JSONArray json = getArrayFromServer(link,urlParameters);
-        if(json.length()==1){
-            return true;
-        }
-        return false;
+        String urlParameters = "Opcion="+opcion+"&idEntrada="+idEntrada+"&idObjetivo="+idObjetivo+"&puntaje="+String.valueOf(puntaje);
+        getArrayFromServer(link,urlParameters);
     }
 
     private static JSONArray getArrayFromServer(String link, String urlParameters){

@@ -1,6 +1,8 @@
 package io.github.matiassalinas.museo_interactivo;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderView.OnQRCodeReadListener{
 
     private Objetivo objetivo;
+    private Usuario usuario;
+
     private int intentos = 0, puntaje=100;
     private TextView intentosText;
     private String textoAnterior = new String();
@@ -33,6 +37,7 @@ public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderV
         setContentView(R.layout.activity_objetivo);
         intentosText= (TextView) findViewById(R.id.intentosText);
         objetivo = (Objetivo) getIntent().getSerializableExtra("objetivo");
+        usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         setTitles();
     }
 
@@ -75,8 +80,26 @@ public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderV
                 intentos++;
                 String str = getResources().getString(R.string.intentos, intentos,puntaje,100);
                 intentosText.setText(str);
-                Toast.makeText(getApplicationContext(),"Objetivo Completado", Toast.LENGTH_SHORT).show();
                 qrCodeReaderView.stopCamera();
+                Thread tr3 = new Thread(){
+                    @Override
+                    public void run() {
+                        WebServiceActions.objetivoCompletado(usuario.getIdEntrada(),objetivo.getIdObjetivo(),puntaje);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                usuario.addHistorial(new Historial(objetivo.getIdObjetivo(),puntaje,objetivo.getIdZona()));
+                                Toast.makeText(getApplicationContext(),"Objetivo Completado", Toast.LENGTH_SHORT).show();
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("usuario", usuario);
+                                setResult(Activity.RESULT_OK, resultIntent);
+                                finish();
+                            }
+                        });
+
+                    }
+                };
+                tr3.start();
             }else if(!text.equals(textoAnterior)){
                 intentos++;
                 if(puntaje>20) puntaje-=20;
