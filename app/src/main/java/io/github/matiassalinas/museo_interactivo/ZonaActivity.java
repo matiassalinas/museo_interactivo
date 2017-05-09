@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ZonaActivity extends AppCompatActivity {
 
     private Zona zona;
+    private Usuario usuario;
     private ArrayList<Objetivo> objetivos;
 
     @Override
@@ -25,6 +26,7 @@ public class ZonaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zona);
         zona = (Zona) getIntent().getSerializableExtra("zona");
+        usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         objetivos = new ArrayList<>();
         setTitles();
         showObjetivos();
@@ -75,7 +77,7 @@ public class ZonaActivity extends AppCompatActivity {
     }
 
     private void setList(){
-        ObjetivosAdapter adapter = new ObjetivosAdapter(getBaseContext(),objetivos);
+        ObjetivosAdapter adapter = new ObjetivosAdapter(getBaseContext(),objetivos, usuario.getHistorial());
         ListView listObjetivos = (ListView) findViewById(R.id.listObjetivos);
         listObjetivos.setAdapter(adapter);
         listObjetivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {

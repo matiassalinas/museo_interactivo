@@ -89,6 +89,7 @@ public class HomeActivity extends AppCompatActivity {
                 Intent mIntent = new Intent(HomeActivity.this, ZonaActivity.class);
                 Toast.makeText(getApplicationContext(),museo.getZona(position).getNombre(), Toast.LENGTH_SHORT).show();
                 mIntent.putExtra("zona", museo.getZona(position));
+                mIntent.putExtra("usuario",usuario);
                 startActivity(mIntent);
             }
         });

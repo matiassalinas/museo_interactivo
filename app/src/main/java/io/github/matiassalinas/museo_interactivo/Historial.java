@@ -1,10 +1,12 @@
 package io.github.matiassalinas.museo_interactivo;
 
+import java.io.Serializable;
+
 /**
  * Created by matias on 05-05-17.
  */
 
-public class Historial {
+public class Historial implements Serializable {
     private int idObjetivo, puntaje, idZona;
 
     public Historial(int idObjetivo, int puntaje, int idZona) {

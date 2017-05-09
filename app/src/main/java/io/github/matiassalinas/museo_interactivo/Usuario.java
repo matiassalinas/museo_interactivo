@@ -2,13 +2,14 @@ package io.github.matiassalinas.museo_interactivo;
 
 import android.content.Context;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by matias on 05-05-17.
  */
 
-public class Usuario {
+public class Usuario implements Serializable {
     private String idEntrada, idUsuario;
     private ArrayList<Historial> historial;
 
@@ -41,14 +42,6 @@ public class Usuario {
 
     public void setHistorial(ArrayList<Historial> historial) {
         this.historial = historial;
-    }
-
-    public int puntajeZona(int idZona){
-        int contador = 0;
-        for(int i = 0; i < historial.size(); i++){
-            if(historial.get(i).getIdZona() == idZona) contador++;
-        }
-        return contador;
     }
 
     public int puntajeTotal(){
