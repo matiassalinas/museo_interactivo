@@ -1,12 +1,13 @@
 package io.github.matiassalinas.museo_interactivo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by matias on 02-05-17.
  */
 
-public class Museo {
+public class Museo implements Serializable{
     private int idMuseo;
     private String nombre, correo, direccion, telefono;
     private ArrayList<Zona> zonas;
