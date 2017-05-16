@@ -1,10 +1,12 @@
 package io.github.matiassalinas.museo_interactivo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,11 @@ public class HomeActivity extends AppCompatActivity {
     private Usuario usuario;
     private TextView puntajeTxt;
     private TextView rangoTxt;
+    private Button salirBtn;
+
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,18 @@ public class HomeActivity extends AppCompatActivity {
         puntajeTxt = (TextView) findViewById(R.id.puntajeTextView);
         rangoTxt = (TextView) findViewById(R.id.rankTextView);
         historial();
+        salirBtn = (Button) findViewById(R.id.salirBtn);
+        salirBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                editor = prefs.edit();
+                editor.clear();
+                editor.commit();
+                Intent i = new Intent(HomeActivity.this,MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     @Override

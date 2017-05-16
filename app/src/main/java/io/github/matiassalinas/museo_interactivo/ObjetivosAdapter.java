@@ -42,6 +42,9 @@ public class ObjetivosAdapter extends ArrayAdapter<Objetivo> {
                 break;
             }
         }
+        if(!isEnabled(position)){
+            convertView.setBackgroundColor(context.getColor(R.color.listOk));
+        }
         objetivoTitulo.setText(objetivo.getTitulo());
         objetivoPuntaje.setText(puntaje+"/100");
         return convertView;

@@ -19,7 +19,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/ranking"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="Rango" />
+
+        <Button
+            android:id="@+id/salirBtn"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:elevation="8dp"
+            android:text="@string/salir"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/puntajeTextView"
@@ -28,7 +39,8 @@
             android:layout_weight="1"
             android:text="@string/puntaje"
             android:textAlignment="textEnd"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="Puntaje" />
 
     </LinearLayout>
 
@@ -40,7 +52,10 @@
         <ListView
             android:id="@+id/listZonas"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:dividerHeight="2dp" />
 
     </LinearLayout>
+
 </LinearLayout>

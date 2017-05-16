@@ -38,6 +38,9 @@ public class ZonasAdapter extends ArrayAdapter<Zona> {
         for(int i = 0; i < historial.size(); i++){
             if(historial.get(i).getIdZona() == zona.getIdZona()) cantidad++;
         }
+        if(cantidad == zona.getContadorObjetivos()){
+            convertView.setBackgroundColor(context.getColor(R.color.listOk));
+        }
         zonaObjetivos.setText(cantidad+"/"+zona.getContadorObjetivos());
         return convertView;
     }
