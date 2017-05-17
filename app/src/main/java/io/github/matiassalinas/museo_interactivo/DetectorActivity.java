@@ -2,14 +2,20 @@ package io.github.matiassalinas.museo_interactivo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
 
 public class DetectorActivity extends Activity implements QRCodeReaderView.OnQRCodeReadListener {
 
@@ -18,6 +24,9 @@ public class DetectorActivity extends Activity implements QRCodeReaderView.OnQRC
     private PointsOverlayView pointsOverlayView;
     private QRCodeReaderView qrCodeReaderView;
 
+    private Usuario usuario;
+    private Museo museo;
+    private ArrayList<String> result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +42,48 @@ public class DetectorActivity extends Activity implements QRCodeReaderView.OnQRC
         if(resultTextView!=null){
             resultTextView.setText(text);
             pointsOverlayView.setPoints(points);
+            final String[] resultado = text.split("##");
+            if(resultado.length!=2 || resultado.length == 0){
+                Toast.makeText(getApplicationContext(),"Código Inválido", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else if(!resultado[0].equals(getString(R.string.app_key))){
+                Toast.makeText(getApplicationContext(),"Código Inválido", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else {
+                Thread tr4 = new Thread(){
+                    @Override
+                    public void run() {
+                        try {
+                            result = WebServiceActions.iniciarSesion(resultado[1]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(result == null){
+                                    Toast.makeText(getApplicationContext(),"Código Inválido", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                usuario = new Usuario(resultado[1],result.get(0).toString(),null);
+                                museo = new Museo(Integer.parseInt(result.get(1)),result.get(2).toString(),result.get(3).toString(),
+                                        result.get(4).toString(), result.get(5).toString(), null);
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("usuario", usuario);
+                                resultIntent.putExtra("museo", museo);
+                                setResult(Activity.RESULT_OK, resultIntent);
+                                finish();
+
+                            }
+                        });
+
+
+                    }
+                };
+                tr4.start();
+            }
         }
 
     }

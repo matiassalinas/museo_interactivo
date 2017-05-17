@@ -40,6 +40,7 @@ public class ZonaActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("HOLA","HOLA");
+        if(data == null) return;
         Usuario usuarioAux = (Usuario) data.getSerializableExtra("usuario");
         if(usuario.puntajeTotal() != usuarioAux.puntajeTotal()){
             Log.d("DISINTO","DISTINTO");

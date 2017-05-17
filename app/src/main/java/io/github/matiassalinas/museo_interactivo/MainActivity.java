@@ -26,16 +26,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.scanButton){
-            editor.clear();
-            editor.putInt("idMuseo",0);
-            editor.putString("idEntrada","MI001");
-            editor.putString("login","OK");
-            editor.commit();
+            Intent mIntent = new Intent(MainActivity.this, DetectorActivity.class);
+            startActivityForResult(mIntent,0);
+            /*
             Museo museo = new Museo(1,"Nombre","correo","direccion","telefono",null);
             Usuario usuario = new Usuario("MI001", "matias", null);
-            login(museo, usuario);
+            */
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data == null) return;
+        editor.clear();
+        editor.putString("login","OK");
+        editor.commit();
+        Usuario usuario = (Usuario) data.getSerializableExtra("usuario");
+        Museo museo = (Museo) data.getSerializableExtra("museo");
+        login(museo,usuario);
+    }
+
 
     public void login(Museo museo, Usuario usuario){
         //Intent i = new Intent(this,DetectorActivity.class);

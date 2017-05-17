@@ -1,5 +1,7 @@
 package io.github.matiassalinas.museo_interactivo;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,6 +89,23 @@ public class WebServiceActions {
         String opcion = "objetivoCompletado";
         String urlParameters = "Opcion="+opcion+"&idEntrada="+idEntrada+"&idObjetivo="+idObjetivo+"&puntaje="+String.valueOf(puntaje);
         getArrayFromServer(link,urlParameters);
+    }
+
+    public static ArrayList<String> iniciarSesion(String idEntrada) throws JSONException {
+        String opcion = "iniciarSesion";
+        String urlParameters = "Opcion="+opcion+"&idEntrada="+idEntrada;
+        JSONArray json = getArrayFromServer(link,urlParameters);
+        ArrayList<String> array = new ArrayList<>();
+        Log.d("JSON", String.valueOf(json));
+        if(json.length() == 0) return null;
+        JSONObject z = json.getJSONObject(0);
+        array.add(0, (String) z.get("idUsuario"));
+        array.add(1, (String) z.get("idMuseo"));
+        array.add(2, (String) z.get("nombre"));
+        array.add(3, (String) z.get("correo"));
+        array.add(4, (String) z.get("direccion"));
+        array.add(5, (String) z.get("telefono"));
+        return array;
     }
 
     private static JSONArray getArrayFromServer(String link, String urlParameters){
