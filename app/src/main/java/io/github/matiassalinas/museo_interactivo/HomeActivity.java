@@ -19,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     private Usuario usuario;
     private TextView puntajeTxt;
     private TextView rangoTxt;
+    private TextView infoTxt;
     private Button salirBtn;
 
     public static final String MY_PREFS_NAME = "MyPrefsFile";
@@ -33,6 +34,9 @@ public class HomeActivity extends AppCompatActivity {
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         puntajeTxt = (TextView) findViewById(R.id.puntajeTextView);
         rangoTxt = (TextView) findViewById(R.id.rankTextView);
+        infoTxt = (TextView) findViewById(R.id.infoTextView);
+        infoTxt.setText(museo.getDireccion() + "\n" + museo.getCorreo() + "\n" + museo.getTelefono());
+        setTitle(museo.getNombre());
         historial();
         salirBtn = (Button) findViewById(R.id.salirBtn);
         salirBtn.setOnClickListener(new View.OnClickListener() {

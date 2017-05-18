@@ -13,7 +13,7 @@
         android:padding="10dp"
         android:text="Nombre Objetivo"
         android:textAlignment="textStart"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView

@@ -39,7 +39,6 @@ public class ZonaActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("HOLA","HOLA");
         if(data == null) return;
         Usuario usuarioAux = (Usuario) data.getSerializableExtra("usuario");
         if(usuario.puntajeTotal() != usuarioAux.puntajeTotal()){
@@ -50,12 +49,10 @@ public class ZonaActivity extends AppCompatActivity {
     }
 
     private void setTitles(){
-        TextView zonaTitle = (TextView) findViewById(R.id.zonaTitle);
         TextView descripcionZona = (TextView) findViewById(R.id.descripcionZona);
         ImageView imageZona = (ImageView) findViewById(R.id.imageZona);
         LinearLayout imageLayoutZona = (LinearLayout) findViewById(R.id.imageLayoutZona);
-
-        zonaTitle.setText(zona.getNombre());
+        setTitle(zona.getNombre());
         descripcionZona.setText(zona.getDescripcion());
         Log.d("IMG",zona.getImagen() + " img ");
         if(zona.getImagen() == "" || zona.getImagen().isEmpty()){

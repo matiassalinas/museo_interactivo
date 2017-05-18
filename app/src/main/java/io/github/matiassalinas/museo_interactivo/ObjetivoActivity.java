@@ -42,17 +42,16 @@ public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderV
     }
 
     private void setTitles(){
-        TextView objetivoTitle = (TextView) findViewById(R.id.objetivoTitle);
         TextView textoObjetivo = (TextView) findViewById(R.id.textoObjetivo);
         ImageView imageObjetivo = (ImageView) findViewById(R.id.imageObjetivo);
         LinearLayout imageLayoutObjetivo = (LinearLayout) findViewById(R.id.imageLayoutObjetivo);
 
-        objetivoTitle.setText(objetivo.getTitulo());
+        setTitle(objetivo.getTitulo());
         textoObjetivo.setText(objetivo.getTexto());
         Log.d("IMG",objetivo.getImagen());
         if(objetivo.getImagen() == "" || objetivo.getImagen().isEmpty()){
             imageLayoutObjetivo.setVisibility(View.GONE);
-            textoObjetivo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            //textoObjetivo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
         else{
             new DownloadImageTask(imageObjetivo).execute(objetivo.getImagen());
