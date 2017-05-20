@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +22,6 @@ public class HomeActivity extends AppCompatActivity {
     private TextView puntajeTxt;
     private TextView rangoTxt;
     private TextView infoTxt;
-    private Button salirBtn;
 
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     private SharedPreferences prefs;
@@ -38,9 +39,20 @@ public class HomeActivity extends AppCompatActivity {
         infoTxt.setText(museo.getDireccion() + "\n" + museo.getCorreo() + "\n" + museo.getTelefono());
         setTitle(museo.getNombre());
         historial();
-        salirBtn = (Button) findViewById(R.id.salirBtn);
-        salirBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.exit:
                 prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
                 editor = prefs.edit();
                 editor.clear();
@@ -48,8 +60,11 @@ public class HomeActivity extends AppCompatActivity {
                 Intent i = new Intent(HomeActivity.this,MainActivity.class);
                 startActivity(i);
                 finish();
-            }
-        });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     @Override
