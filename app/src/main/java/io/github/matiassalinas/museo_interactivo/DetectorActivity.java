@@ -52,6 +52,7 @@ public class DetectorActivity extends Activity implements QRCodeReaderView.OnQRC
                 return;
             }
             else {
+                qrCodeReaderView.stopCamera();
                 Thread tr4 = new Thread(){
                     @Override
                     public void run() {
