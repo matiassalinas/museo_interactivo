@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -86,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
                             puntajeTxt.setText(str);
                             if(museo.getZonasSize()==0) showZonas();
                             else setList();
-                            Toast.makeText(getApplicationContext(),"Historial cargado", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"Historial cargado", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -109,7 +108,7 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             setList();
-                            Toast.makeText(getApplicationContext(),"Zonas cargadas", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"Zonas cargadas", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -132,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent mIntent = new Intent(HomeActivity.this, ZonaActivity.class);
-                Toast.makeText(getApplicationContext(),museo.getZona(position).getNombre(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),museo.getZona(position).getNombre(), Toast.LENGTH_SHORT).show();
                 mIntent.putExtra("zona", museo.getZona(position));
                 mIntent.putExtra("usuario",usuario);
                 startActivity(mIntent);

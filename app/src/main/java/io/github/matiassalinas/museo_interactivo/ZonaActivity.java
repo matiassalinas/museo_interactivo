@@ -3,14 +3,12 @@ package io.github.matiassalinas.museo_interactivo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +70,7 @@ public class ZonaActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             setList();
-                            Toast.makeText(getApplicationContext(),"Objetivos cargados", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"Objetivos cargados", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -93,7 +91,7 @@ public class ZonaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent mIntent = new Intent(ZonaActivity.this, ObjetivoActivity.class);
-                Toast.makeText(getApplicationContext(),objetivos.get(position).getTitulo(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),objetivos.get(position).getTitulo(), Toast.LENGTH_SHORT).show();
                 mIntent.putExtra("objetivo", objetivos.get(position));
                 mIntent.putExtra("usuario",usuario);
                 startActivityForResult(mIntent,0);
