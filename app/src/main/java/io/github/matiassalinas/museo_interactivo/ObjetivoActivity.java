@@ -51,7 +51,6 @@ public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderV
         Log.d("IMG",objetivo.getImagen());
         if(objetivo.getImagen() == "" || objetivo.getImagen().isEmpty()){
             imageLayoutObjetivo.setVisibility(View.GONE);
-            //textoObjetivo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
         else{
             new DownloadImageTask(imageObjetivo).execute(objetivo.getImagen());
@@ -114,13 +113,11 @@ public class ObjetivoActivity extends AppCompatActivity implements QRCodeReaderV
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("RESUME","RESUME");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             //setContentView(R.layout.activity_detector);
             initQRCodeReaderView();
         }else {
-            Log.d("ELSE","ELSE");
             requestCameraPermission();
         }
     }

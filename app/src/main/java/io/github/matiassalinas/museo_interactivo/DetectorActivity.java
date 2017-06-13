@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,13 +92,11 @@ public class DetectorActivity extends Activity implements QRCodeReaderView.OnQRC
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("RESUME","RESUME");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             setContentView(R.layout.activity_detector);
             initQRCodeReaderView();
         }else {
-            Log.d("ELSE","ELSE");
             requestCameraPermission();
         }
     }
@@ -106,7 +104,9 @@ public class DetectorActivity extends Activity implements QRCodeReaderView.OnQRC
     @Override
     protected void onPause() {
         super.onPause();
-        qrCodeReaderView.stopCamera();
+        if (qrCodeReaderView != null) {
+            qrCodeReaderView.stopCamera();
+        }
     }
 
     private void initQRCodeReaderView(){
@@ -131,8 +131,21 @@ public class DetectorActivity extends Activity implements QRCodeReaderView.OnQRC
         qrCodeReaderView.setBackCamera();
     }
     private void requestCameraPermission() {
-        ActivityCompat.requestPermissions(DetectorActivity.this, new String[]{
+        ActivityCompat.requestPermissions(this, new String[] {
                 Manifest.permission.CAMERA
         }, MY_PERMISSION_REQUEST_CAMERA);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                                     @NonNull int[] grantResults) {
+        if (requestCode != MY_PERMISSION_REQUEST_CAMERA) {
+            return;
+        }
+
+        if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            initQRCodeReaderView();
+        } else {
+            Toast.makeText(getApplicationContext(),"Camera permission request was denied.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

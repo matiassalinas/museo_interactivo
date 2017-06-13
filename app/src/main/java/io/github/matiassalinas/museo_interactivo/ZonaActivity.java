@@ -42,7 +42,6 @@ public class ZonaActivity extends AppCompatActivity {
         if(data == null) return;
         Usuario usuarioAux = (Usuario) data.getSerializableExtra("usuario");
         if(usuario.puntajeTotal() != usuarioAux.puntajeTotal()){
-            Log.d("DISINTO","DISTINTO");
             usuario = usuarioAux;
             setList();
         }
@@ -54,14 +53,11 @@ public class ZonaActivity extends AppCompatActivity {
         LinearLayout imageLayoutZona = (LinearLayout) findViewById(R.id.imageLayoutZona);
         setTitle(zona.getNombre());
         descripcionZona.setText(zona.getDescripcion());
-        Log.d("IMG",zona.getImagen() + " img ");
         if(zona.getImagen() == "" || zona.getImagen().isEmpty()){
-            Log.d("IMG NO", "NO IMG");
             imageLayoutZona.setVisibility(View.GONE);
             descripcionZona.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
         else{
-            Log.d("IMG SI", "SI IMG");
             new DownloadImageTask(imageZona).execute(zona.getImagen());
         }
     }
